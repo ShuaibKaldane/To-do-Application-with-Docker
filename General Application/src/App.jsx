@@ -1,19 +1,30 @@
-import { useState } from "react"
-import "./App.css"
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
-function App() {
-  const [current , setcurrent] = useState("");
-  function handleChange(){
-    let value = prompt("Enter your name ")
-    setcurrent(value)
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import Dashboard from "./pages/Dashboard"
+import PrivateRoute from "./components/PrivateRoute"
 
-  }
+export default function App() {
   return (
-    <>
-    <button onClick={handleChange}>Start</button>
-    <p> Good Morning , {current}</p>  
-    </>
+    <BrowserRouter>
+      <Routes>
+
+        <Route path="/" element={<Navigate to="/login" />} />
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
